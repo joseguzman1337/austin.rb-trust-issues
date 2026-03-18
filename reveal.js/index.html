@@ -1,0 +1,780 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Where is the Trust?</title>
+
+		<meta name="description" content="A discussion of trust on the Internet">
+		<meta name="author" content="Trevor Rosen, Tod Beardsley">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+        <section>
+          <h1>Trust Issues in Networking</h1>
+          <h3>Making sense of the decisions you're making</h3>
+          <h4>Trevor Rosen (@trevrosen)</h4>
+          <h4>Tod Beardsley (@todb)</h4>
+          <h4>egypt (@egyp7)</h4>
+          <h5>(sponsored by @rapid7)</h5>
+          <p><a href="https://github.com/rapid7/austin.rb-trust-issues">github.com/rapid7/austin.rb-trust-issues</a></p>
+        </section>
+
+        <section>
+          <section>
+            <h1>Trust In (Meatspace) Society</h1>
+          </section>
+
+          <section>
+            <h2>Enlightenment Thought</h2>
+            <h3>The birth of Social Theory</h3>
+            <img src="/images/kant.jpg" alt="Kant"/>
+            <img src="/images/hobbes.jpg" alt="Hobbes"/>
+            <img src="/images/rousseau.jpg" alt="Kant"/>
+            <aside class="notes">
+            <ul>
+              <li>They wanted to know the axiomatic basis for society</li>
+              <li>They came up with some notions held to be universal</li>
+            </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h3>Mankind without socieity exists in a 'state of nature'</h3>
+            <p>What Hobbes famously described as 'nasty, brutish, and short'</p>
+            <aside>
+              <ul>
+                <li>Everyone out for themselves</li>
+                <li>No incentives to cooperate</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Social contract</h2>
+            <p>The notion that we give up some liberties in order to have some level of defined order/safety/security provided by a ruler or legal framework.</p>
+            <aside class="notes">
+              <ul>
+                <li>Somehow, we live in societies - not a state of nature. How does this work?</li>
+                <li>Big notion - pretty much all the hot thinkers had their version</li>
+                <li>we give up some freedoms in order to have some guarantees</li>
+                <li>this is true in every kind of society</li>
+                <li>there must be axiomatic notions in sociology, much like math</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Their conclusions?</h2>
+          </section>
+
+          <section>
+            <h2>Humans are incentivized to behave</h2>
+            <h3>These incentives form the basis of societal pressures codified in law:</h3>
+            <ul>
+              <li>morality</li>
+              <li>reputation</li>
+              <li>cooperation</li>
+            </ul>
+
+            <aside class='notes'>
+              <ul>
+                <li>Everything flows from these frameworks</li>
+                <li>Morals: Don't kill because it's wrong (religious: harmful to soul/karma)</li>
+                <li>Rep: Don't kill because you'd be ostracized</li>
+                <li>Coop: Don't kill because he can help me</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <blockquote>
+              Act in such a way that you treat humanity, whether in your own person or in the person of any other, never merely as a means to an end, but always at the same time as an end.
+            </blockquote>
+              <em>- Immanuel Kant, Grounding for the Metaphysics of Morals</em>
+            <aside class="notes">
+              <ul>
+                <li>This is pretty much the Golden Rule</li>
+                <li>But Kant is also saying in his way that we are incentivized to do this</li>
+                <li>He calls this the 'Categorical Imperative' and in his view it's the basis of society</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Motivations and Morals</h2>
+            <ul>
+              <li>political philosophy studies the roots of societal interactions</li>
+              <li>psychology tells us about the individual's motivations</li>
+              <li>sociology studies collective human behavior</li>
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li>So over time we develop a set of ways to study this stuff</li>
+                <li>We learn more about human behavior at the individual and collective level</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Is that it?</h2>
+          </section>
+
+          <section>
+            <h1>NO</h1>
+            <h2>Game theory has a lot to say about this too</h2>
+            <img src="/images/game-theory-squirrels.jpg" alt="Image from http://en.wikipedia.org/wiki/Evolutionary_game_theory"/>
+          </section>
+
+          <section>
+            <h3>We can do experiments</h3>
+            <p>And we now know that at a certain point, someone will defect</p>
+          </section>
+
+          <section>
+            <h2>What is defection?</h2>
+            <p>Basically it's when a human actor decides to act against collective interest and in favor of individual interest</p>
+          </section>
+
+          <section>
+            <h2>So what?</h2>
+          </section>
+
+          <section>
+            <h2>On the Internet, defection happens quickly</h2>
+            <ul>
+              <li>Social contract doesn't exist</li>
+              <li>Meatspace constraints on behavior don't exist</li>
+              <li>There are no real consequences for acting like a sociopath</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Sociopath?</h2>
+          </section>
+
+          <section>
+            <h3>Here are some indicators</h3>
+             <ol>
+               <li>failure to conform to social norms with respect to lawful behaviors</li>
+               <li>deception, as indicated by repeatedly lying, use of aliases, or conning others for personal profit or pleasure;</li>
+               <li>impulsivity or failure to plan ahead;</li>
+               <li>irritability and aggressiveness</li>
+               <li>consistent irresponsibility</li>
+               <li>lack of remorse</li>
+             </ol>
+             </br>
+             </br>
+             <small><a href="http://en.wikipedia.org/wiki/Antisocial_personality_disorder#DSM-IV-TR">http://en.wikipedia.org/wiki/Antisocial_personality_disorder#DSM-IV-TR</a></small>
+          </section>
+
+          <section>
+            <h3>Sound like anyone you know?</h3>
+          </section>
+
+          <section>
+            <h3>The Internet is full of thieves, trolls and perverts</h3>
+          </section>
+
+          <section>
+            <h3>It's useless to try to understand these people or deal with them as you would in Meatspace</h3>
+          </section>
+
+          <section>
+            <h3>"Some men just want to watch the world burn"</h3>
+            <img src="/images/joker-1.jpg" alt="Dark Knight - Joker"/>
+          </section>
+        </section>
+
+        <!-- END section of societal explanation -->
+
+        <!-- BEGIN section of Internet trust -->
+        <section>
+          <section>
+            <h1>Trust on the Internet</h1>
+          </section>
+          <section>
+            <h2>Without a social contract, how do we avoid trust on the Internet?</h2>
+          </section>
+
+          <section>
+            <h1>We don't</h1>
+              <p>We will never have total control over our societal environment on the Internet - same as in Real Life</p>
+          </section>
+
+          <section>
+            <h2>At some point, trust is inevitable</h2>
+          </section>
+
+          <section>
+            <h2>But you shouldn't trust more than you need to</h2>
+          </section>
+
+          <section>
+            <h2>People find this idea depressing sometimes</h2>
+              <p>Because they make the mistake of equating the Internet with human society we encounter IRL</p>
+          </section>
+
+          <section>
+            <h2>But they shouldn't</h2>
+            <p>The Internet is not the same as Meatspace society and can't be treated as such</p>
+          </section>
+
+          <section>
+            <h2>What are our tools in a diminished-trust environment?</h2>
+            <ul>
+              <li>Encryption</li>
+              <li>Authentication</li>
+              <li>Vigilance</li>
+              <li>Faith</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Yeah, faith</h2>
+            <p>At a certain point, you have no choice but to depend on others - even on the Internet.</p>
+            <aside class="notes">
+              <p>In Meatspace, you might go to a movie, trusting that you won't be shot. People have been shot at the movies before, but you have faith that it will be safe for you.</p>
+              <p>There are times when similar inevitable trust calculations are made on the Internet</p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>But you are probably trusting more things than you think</h2>
+            <h4>Knowing *when* you are relying on faith is paramount</h4>
+          </section>
+
+          <section>
+            <h2>Demo: all the trust involved from wifi join to https load</h2>
+          </section>
+
+        </section>
+        <!-- END section of Internet trust -->
+
+        <!-- BEGIN section of demo -->
+        <section>
+          <section>
+            <h1>DEEP DIVE: PUBLIC WIFI</h1>
+          </section>
+
+          <section>
+            <h2>ATTWIFI</h2>
+            <img src="/images/death-star-att.png" alt="AT&T Death Star"/>
+            <p>Ubiquitous, free, and insecure.</p>
+          </section>
+
+          <section>
+            <h2>Open Wifi Association</h2>
+          </section>
+          <section>
+            <p>You: "Hey, is attwifi around?"<p>
+          </section>
+          <section>
+            <p>Access Point: "I'm attwifi."</p>
+          </section>
+          <section>
+            <p>You: "I'm going to talk to you, cool?"</p>
+          </section>
+          <section>
+            <p>Access Point: "Sure, go for it!"</p>
+          </section>
+          <section>
+            <p>You: "Sweet, I'm joining the network."</p>
+          </section>
+          <section>
+            <p>Access Point: "Sounds good to me!"</p>
+          </section>
+
+          <section>
+            <h2> How do you know the network is real?</h2>
+            <p>On open wifi... you don't.</p>
+            <p>You have faith that there is no Evil Twin</p>
+            <p> <a href="http://en.wikipedia.org/wiki/Evil_twin_(wireless_networks)">http://en.wikipedia.org/wiki/Evil_twin_(wireless_networks)</a></p>
+          </section>
+
+          <section>
+            <h2>Alternatives</h2>
+            <p>WEP "secured" networks</p>
+            <p>WPA2 networks</p>
+          </section>
+          <section>
+            <h2>Still imperfect</h2>
+            <p>WEP is super crackable</p>
+            <p>WPS is a shortcut for bad guys, too.</p>
+          </section>
+
+        </section>
+
+        <section>
+          <section>
+            <h1>DEEP DIVE: DHCP</h1>
+          </section>
+
+          <section>
+            <h2>Dynamic Host Configuration Protocol</h2>
+            <p>You need it to get an IP address</p>
+            <p>You need it to learn about the network</p>
+          </section>
+
+          <section>
+            <h2>The first two seconds</h2>
+            <img src="/images/attwifi-00-dhcp-overview.png" alt="Wireshark PCAP"/>
+          </section>
+
+          <section>
+            <h2>DHCP DISCOVER: Where's DHCP at?</h2>
+            <img src="/images/attwifi-01-dhcp-discover.png" alt="Wireshark PCAP"/>
+          </section>
+
+          <section>
+            <h2>The Broadcast Address</h2>
+            <img src="/images/attwifi-02-dhcp.png" alt="Wireshark PCAP"/>
+          </section>
+
+          <section>
+            <h2>Detour: Suddenly, an ARP!</h2>
+            <img src="/images/attwifi-03-arp-from-wap.png" alt="Wireshark PCAP"/>
+          </section>
+
+          <section>
+            <h3>About ARP</h3>
+            <p>It's the Address Resolution Protocol</p>
+            <p>It's how computers learn who's who, nearby.</p>
+            <p>It's entirely faith based.</p>
+          </section>
+
+          <section>
+            <h3>More about ARP</h3>
+            <p>This is all based on MAC (Media Access Control) addresses</p>
+            <p>...which aren't signed or verified</p>
+            <p>...which sometimes can be overwritten</p>
+            <p>...which sometimes happen gratuitously</p>
+          </section>
+
+          <section>
+            <h2>Ok! Back to DHCP</h2>
+          </section>
+
+          <section>
+            <h2>The DHCP OFFER</h2>
+            <img src="/images/attwifi-04-dhcp-offer.png" alt="Wireshark PCAP"/>
+          </section>
+
+          <section>
+            <h2>Here's your IP address!</h2>
+            <img src="/images/attwifi-05-dhcp-offer-ipaddr.png" alt="Wireshark PCAP"/>
+          </section>
+
+          <section>
+            <h2>Other things you need</h2>
+            <img src="/images/attwifi-06-dhcp-offer-options-1.png" alt="Wireshark PCAP"/>
+          </section>
+
+          <section>
+            <h2>The Subnet</h2>
+            <p>Lets you know what IP addresses are local.</p>
+            <p>If your buddy is local, use ARP to resolve.</p>
+          </section>
+
+          <section>
+            <h2>How to talk to the world</h2>
+            <img src="/images/attwifi-06-dhcp-offer-options-2.png" alt="Wireshark PCAP"/>
+          </section>
+
+          <section>
+            <h2>Routing</h2>
+            <p>If your buddy is remote, you need the router.</p>
+            <p>If you don't know an IP address, you need DNS.</p>
+            <p>DNS: Domain Name System (Human-memorable names)</p>
+          </section>
+
+          <section>
+            <h2>The DHCP REQUEST</h2>
+            <img src="/images/attwifi-07-dhcp-request.png" alt="Wireshark PCAP"/>
+          </section>
+
+          <section>
+            <h3>Yeah, what you said.</h3>
+          </section>
+
+          <section>
+            <h2>Still Broadcasting</h2>
+            <img src="/images/attwifi-08-dhcp-request-broadcast.png" alt="Wireshark PCAP"/>
+            <p> In fact, the entire DHCP exchange on this network is broadcast, which is weird.</p>
+          </section>
+
+          <section>
+            <h2>The DHCP ACK: Roger that</h2>
+            <img src="/images/attwifi-09-dhcp-ack.png" alt="Wireshark PCAP"/>
+          </section>
+
+          <section>
+            <h2>Now you can talk to the world</h2>
+            <img src="/images/attwifi-09-dhcp-ack-yay-router-and-dns.png" alt="Wireshark PCAP"/>
+          </section>
+
+          <section>
+            <h2>This all took about 1 1/2 seconds</h2>
+            <img src="/images/attwifi-10-dhcp-roundtrip.png" alt="Wireshark PCAP"/>
+          </section>
+
+          <section>
+            <h2>So what?</h2>
+            <p>On other networks, it's about 300 milliseconds</p>
+            <img src="/images/attwifi-11-dhcp-roundtrip-compare-twcwifi.png" alt="Wireshark PCAP"/>
+          </section>
+
+          <section>
+            <h2>Race conditions</h2>
+            <p>What if a bad guy pretends to be DHCP?</p>
+            <p>How can you tell?</p>
+          </section>
+
+          <section>
+            <img src="/images/GeorgeMichaelFaithAlbumcover.jpg" alt="You gotta have faith-a, faith-a, faith."/>
+          </section>
+
+          <section>
+            <h2>My first ARP</h2>
+            <img src="/images/attwifi-12-arp.png" alt="Wireshark PCAP"/>
+          </section>
+
+          <section>
+            <img src="/images/GeorgeMichaelFaithAlbumcover.jpg" alt="You gotta have faith-a, faith-a, faith."/>
+          </section>
+
+          <section>
+            <h2>Implementing ARP security</h2>
+            <img src="/images/attwifi-13-arp-security-lol.png" alt="Wireshark PCAP"/>
+          </section>
+
+          <section>
+            <h2>This is all local</h2>
+            <img src="/images/attwifi-99-tweet.png" alt="Wireshark PCAP"/>
+          </section>
+
+          <section>
+            <h2>This is all shady</h2>
+            <p>It's fun, but antisocial.</p>
+            <p>How often is this a problem?</p>
+          </section>
+
+          <section>
+            <h2>Reasonable Defenses</h2>
+            <p>Avoid open wireless</p>
+            <p>Never automatically connect to anything?</p>
+            <p>Use a VPN provider if you're really worried.</p>
+            <p>Even if your names and routes are untrustworthy, we have a solution...</p>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+            <h1>DEEP DIVE: SSL</h1>
+          </section>
+
+          <section>
+            <h1>DEEP DIVE: <strike>SSL</strike> TLS</h1>
+          </section>
+
+          <section>
+            <h2>Transport Layer Security</h2>
+            <p>You need it to prove you are who you are</p>
+            <p>You need it to keep secrets</p>
+            <p>You need it to ensure your data is unaltered</p>
+          </section>
+
+          <section>
+            <h2>GitHub's certificate</h2>
+            <img src="/images/github-cert-01.png" alt="GitHub Certificate"/>
+          </section>
+
+          <section>
+            <h2>How do you know it's real?</h2>
+            <img src="/images/github-cert-02.png" alt="Certificate Chain"/>
+          </section>
+
+          <section>
+            <h2>Respect my several dozen authorities</h2>
+            <div align="center">
+              <table width="80%">
+                <tr>
+                  <td>Windows 7 (US version)</td><td>74</td>
+                </tr>
+                <tr>
+                  <td>CyanogenMod 11</td><td>146</td>
+                </tr>
+                <tr>
+                  <td>Other Android Versions</td><td>???</td>
+                </tr>
+                <tr>
+                  <td>Ubuntu Linux</td><td>168</td>
+                </tr>
+                <tr>
+                  <td>Mozilla Firefox</td><td>182</td>
+                </tr>
+                <tr>
+                  <td>OS X Yosemite</td><td>220</td>
+                </tr>
+                <tr>
+                  <td>iOS 8</td><td>223</td>
+                </tr>
+              </table>
+            </div>
+          </section>
+
+          <section>
+            <h2>How does Digicert know it's real?</h2>
+            <img src="/images/github-cert-03.png" alt="Digicert Statement"/>
+          </section>
+
+          <section>
+            <h2>1.4.1. Appropriate Certificate Uses</h2>
+            <p>Certificates	issued	under	this	CP	may	be	used	for	the	purposes	designated	in	the	key	usage	and	
+            extended	key	usage	fields	found	in	the	certificate.		However,	the	sensitivity	of	the	information	
+            processed	or	protected	by	a	certificate	varies	greatly,	and	
+            <span style="color:red;font-weight:bold;">
+              each	Relying	Party	must	evaluate	the	
+              application	environment	and	associated	risks
+            </span>	
+            before	deciding	on	whether	to	use	a	certificate	issued	
+            under	this	CP.</p>
+
+          </section>
+          <section>
+            <h2>1.4.2. Prohibited Certificate Uses</h2>
+            <p> Certificates
+              <span style="color:red;font-weight:bold;">
+                do	not	guarantee
+              </span>
+              that	the	Subject	is	trustworthy,	honest,	reputable	in	its	business	
+              dealings,	compliant	with	any	laws,	or	safe	to	do	business	with.		A	certificate	only	establishes	that	the	
+              information	in	the	certificate	was	verified	as	reasonably	correct	when	the	certificate	issued.		Code	
+              signing	certificates	do	not	indicate	that	the	signed	code	is	safe	to	install	or	is	free	from	malware,	bugs,	
+              or	vulnerabilities.
+            </p>
+          </section>
+
+        </section>
+
+        <!-- END section of demo -->
+
+        <!-- BEGIN section of developer trust -->
+        <section>
+          <section>
+            <h1>Selling Trust</h1>
+          </section>
+          <section>
+            <h2>Trust is your metaproduct as a software developer</h2>
+          </section>
+          <section>
+            <h3>In some cases, we are literally<br/> dealing with life and death</h3>
+            <ul>
+              <li>medical devices</li>
+              <li>car/train/plane firmware</li>
+              <li>Industrial Control Systems(controlling powerplants, factories, pipelines, etc)</li>
+            </ul>
+          </section>
+          <section>
+            <h2>But no matter what you get paid for, you are selling trust</h2>
+          </section>
+          <section>
+            <h3>We are all charged with the stewardship of data:</h3>
+            <ul>
+              <li>privacy</li>
+              <li>accuracy</li>
+              <li>security</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Things we can control,<br /> things we must advocate for</h2>
+          </section>
+          <section>
+            <h2>Under our control</h2>
+            <ul>
+              <li>where JS libraries come from</li>
+              <li>whether we encrypt the transport layer</li>
+              <li>whether we look for problems in our code</li>
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li>Hard to think of places where SSL *shouldn't* be</li>
+                <li>Static analysis tools can help with this. Breakman is free. CodeClimate is worth it.</li>
+              </ul>
+            </aside>
+          </section>
+          <section>
+            <h3>Hotlinking JS libraries</h3>
+            <pre>
+            <code>&lt;script src='http://code.jquery.com/jquery-2.1.1.js' /&gt; </code>
+            </pre>
+            <aside class='notes'>
+              <ul>
+                <li>ASK AUDIENCE: how many of you work on web apps and do this kind of thing?</li>
+                <li>Hotlinking JS libraries can be risky. Doing it without SSL is irresponsible. jquery gets pwned and you're in bad shape</li>
+                <li>jQuery has been pwned before for this exact reason. Literally thousands of sites could have backdoors injected this way</li>
+                <li>Kinda bad to do this at all, but if you're going to, at least use SSL to get it</li>
+              </ul>
+            </aside>
+          </section>
+          <section>
+            <h3>Consider SSL everywhere</h3>
+            <aside class="notes">
+              <ul>
+                <li>ASK AUDIENCE: What are some places where SSL *isn't* appropriate?</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h3>Use a static analysis tool</h3>
+            <p>Brakeman(<a href="http://brakemanscanner.org">brakemanscanner.org</a>) is a good one for Rails</p>
+            <aside class="notes">
+              <ul>
+                <li>ASK AUDIENCE: how many of you use something like this in Rails now?</li>
+                <li>There's really no excuse</li>
+                <li>Easy to set up in a CI step (with Jenkins)</li>
+                <li>If you have the $$, CodeClimate does it for you</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Requiring our Advocacy</h2>
+          </section>
+          <section>
+            <h3>OpenSSL</h3>
+            <ul>
+              <li>be aware of what you are using</li>
+              <li>gain some understanding of ciphers, encryption handshakes, etc</li>
+              <li>realize that OpenSSL is pretty strange and fragile, despite its ubiquity</li>
+            </ul>
+            <aside class='notes'>
+              <ul>
+                <li>I would wager no one in this room is qualified to commit on OpenSSL. I'm certainly not</li>
+                <li>this stuff is extremely hard</li>
+                <li>What encryption suites you are using/supporting matter quite a bit</li>
+                <li>What version of SSL/TLS you are using is important</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h3>Package Managers Should Make Signing Painless (RubyGems)</h3>
+            <img src="/images/rubygems.jpg" alt=""/>
+            <aside class='notes'>
+            <ul>
+              <li>it's not easy to do this</li>
+              <li>it could be easier</li>
+              <li>on RubyRogues, [TK name] said that making this easier is not really a priority due to lack of expertise</li>
+            </ul>
+            </aside>
+          </section>
+
+        </section>
+        <!-- END section of developer trust -->
+        <section>
+          <section>
+            <h2>Conclusions</h2>
+          </section>
+          <section>
+            <h3>For hundreds of years, we've known how human societies work</h3>
+          </section>
+          <section>
+            <h3>We know what human societies in Meatspace rely on</h3>
+          </section>
+          <section>
+            <h3>The Internet lacks the same constraints as Meatspace</h3>
+            <h4>There's no similar social order, so trust makes less sense</h4>
+          </section>
+          <section>
+            <h3>Whether as a dev or end user, know what you're trusting</h3>
+            <h4>Minimize the trust wherever you can</h4>
+          </section>
+          <section>
+            <h3>Don't think of security as 'what to be afraid of'</h3>
+            <h4>(there are too many things to be afraid of)</h4>
+          </section>
+          <section>
+            <h3>Think of it as 'how to sell a better trust product'</h3>
+          </section>
+        </section>
+
+        <!--LAST SLIDE-->
+        <section>
+          <h1>FIN</h1>
+          <h3>Questions?</h3>
+        </section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
